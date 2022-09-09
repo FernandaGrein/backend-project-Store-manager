@@ -68,5 +68,24 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "3c5c0e13-17f7-48ce-ae0f-73a1465e1e55",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products",
+    "url": "http://localhost:3000/products",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-09-09T21:28:01.416Z",
+    "modified": "2022-09-09T21:28:01.534Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\": \"Chicote da Mulher Maravilha\"\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]
