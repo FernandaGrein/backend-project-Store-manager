@@ -16,7 +16,7 @@ const getProductsById = async (req, res) => {
   const productById = await productsServices.getProductById(id);
 
   if (productById.type) {
-    return res.status(productById.type).json(productById.message);
+    return res.status(productById.type).json({ message: productById.message });
   }
 
   res.status(200).json(productById.message);
