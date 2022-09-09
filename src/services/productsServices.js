@@ -1,5 +1,5 @@
 const productsModel = require('../models/productsModel');
-const productSchema = require('./validations/schemas');
+const schemas = require('./validations/schemas');
 
 const getAllProducts = async () => {
   const products = await productsModel.getAllProducts();
@@ -21,9 +21,16 @@ const getProductById = async (id) => {
 };
 
 const addNewProduct = async (productName) => {
-  const { error } = productSchema.validate({ productName });
-  console.log('erro validacao', error);
-  if (error) return { type: 400, message: error.message };
+  const validation = schemas.productsSchema.validate({ name: productName });
+
+  if (validation.error && validation.error.message === '"name" is required') {
+    return { type: 400, message: validation.error.message };
+  }
+  if (
+    validation.error
+    && validation.error.message === '"name" length must be at least 5 characters long') {
+    return { type: 422, message: validation.error.message };
+  }
 
   const idFromInsert = await productsModel.insertProduct(productName);
 
