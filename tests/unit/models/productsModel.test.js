@@ -35,5 +35,9 @@ describe('Testa a camada productsModel', function () {
     
     expect(result).to.be.deep.equal(productNotFound[0])
   });
+
+  it('testa se é possível adicionar um novo produto', async function () {
+
+  });
    afterEach(sinon.restore);
 });

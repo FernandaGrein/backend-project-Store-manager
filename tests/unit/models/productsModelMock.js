@@ -18,7 +18,7 @@ const productWithId1 = [{
   name: 'Martelo de Thor',
 }];
 
-const productNotFound =  [{ message: 'Product not found' }]
+const productNotFound = [{ message: 'Product not found' }]
 
 module.exports = {
   allProducts,
