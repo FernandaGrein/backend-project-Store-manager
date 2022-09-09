@@ -1,4 +1,5 @@
 const productsModel = require('../models/productsModel');
+const productSchema = require('./validations/schemas');
 
 const getAllProducts = async () => {
   const products = await productsModel.getAllProducts();
@@ -20,6 +21,10 @@ const getProductById = async (id) => {
 };
 
 const addNewProduct = async (productName) => {
+  const { error } = productSchema.validate({ productName });
+  console.log('erro validacao', error);
+  if (error) return { type: 400, message: error.message };
+
   const idFromInsert = await productsModel.insertProduct(productName);
 
   return {

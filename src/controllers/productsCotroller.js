@@ -27,7 +27,11 @@ const addNewProduct = async (req, res) => {
 
   const newProduct = await productsServices.addNewProduct(name);
 
-  res.status(201).json(newProduct.message);
+  if (newProduct.type) {
+    return res.status(newProduct.type).json(newProduct.message);
+  }
+    
+  return res.status(201).json(newProduct.message);
 };
 
 module.exports = {
