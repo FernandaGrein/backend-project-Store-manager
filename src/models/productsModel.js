@@ -8,7 +8,7 @@ const getAllProducts = async () => {
 };
 
 const getProductsById = async (id) => {
- const [result] = await connection.execute(
+ const [[result]] = await connection.execute(
     'SELECT * FROM products WHERE ID = ?', [id],
   );
   return result;

@@ -3,7 +3,11 @@ const productsServices = require('../services/productsServices');
 const getProducts = async (_req, res) => {
   const allProducts = await productsServices.getAllProducts();
 
-  res.status(200).json(allProducts);
+  if (allProducts.type) {
+    return res.status(allProducts.type).json(allProducts.message);
+  }
+
+  res.status(200).json(allProducts.message);
 };
 
 const getProductsById = async (req, res) => {
@@ -11,7 +15,11 @@ const getProductsById = async (req, res) => {
 
   const productById = await productsServices.getProductById(id);
 
-  res.status(200).json(productById);
+  if (productById.type) {
+    return res.status(productById.type).json(productById.message);
+  }
+
+  res.status(200).json(productById.message);
 };
 
 module.exports = {
