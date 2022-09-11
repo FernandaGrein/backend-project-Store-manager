@@ -18,10 +18,16 @@ const productWithId1 = {
     name: "Martelo de Thor",
 };
 
+const newProduct = {
+  id: 5,
+  name: "Chicote da mulher maravilha",
+};
+
 const productNotFound = [{ message: "Product not found" }];
 
 module.exports = {
   allProducts,
   productWithId1,
   productNotFound,
+  newProduct,
 };
