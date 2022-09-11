@@ -127,16 +127,16 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:3000/products/",
-    "url": "http://localhost:3000/products",
+    "url": "http://localhost:3000/sales",
     "method": "POST",
     "sortNum": 0,
     "created": "2022-09-09T21:51:19.916Z",
-    "modified": "2022-09-09T22:43:17.546Z",
+    "modified": "2022-09-11T21:18:39.005Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\": \"Cn\"\n}",
+      "raw": "[\n  {\n    \"productId\": 2,\n    \"quantity\": 5\n  },\n  {\n    \"productId\": 3,\n    \"quantity\": 7\n  }\n]",
       "form": []
     },
     "tests": []
