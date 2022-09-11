@@ -16,7 +16,7 @@ const allProducts = [
 const productWithId1 = {
     id: 1,
     name: "Martelo de Thor",
-  };
+};
 
 
 module.exports = {

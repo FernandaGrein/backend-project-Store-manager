@@ -23,7 +23,6 @@ describe('Testa a camada productsModel', function () {
     sinon.stub(connection, "execute").resolves([productWithId1]);
 
     const result = await productsModel.getProductsById(1);
-    console.log('select id ', result);
 
     expect(result).to.be.deep.equal(productWithId1[0])
   });
@@ -37,7 +36,10 @@ describe('Testa a camada productsModel', function () {
   });
 
   it('testa se é possível adicionar um novo produto', async function () {
+    sinon.stub(connection, "execute").resolves([{ insertId: 5 }]);
+    const result = await productsModel.insertProduct("Chicote da Mulher Maravilha")
 
+    expect(result).to.be.equal(5);
   });
    afterEach(sinon.restore);
 });

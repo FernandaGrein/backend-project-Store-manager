@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
+const connection = require('../../../src/models/connection');
 const productsModel = require('../../../src/models/productsModel');
 const productsServices = require('../../../src/services/productsServices');
 const { allProducts, productWithId1 } = require("./productsServicesMocks");
@@ -28,12 +29,35 @@ describe('testa a camada productsServives', function () {
 
     const productById = await productsServices.getProductById(1);
 
-    console.log(productById);
-
     expect(productById.type).to.be.null;
     expect(productById.message).to.be.deep.equal({
       id: 1,
       name: "Martelo de Thor",
+    });
+  });
+
+  it('Testando a validação do "name" recebido pelo body', async function () {
+    const result = await productsServices.addNewProduct("as");
+
+    expect(result.type).to.be.equal(422)
+    expect(result.message).to.be.deep.equal(
+      '"name" length must be at least 5 characters long'
+    );
+
+    const resultWithOutName = await productsServices.addNewProduct("");
+
+    expect(resultWithOutName.type).to.be.equal(400);
+    expect(resultWithOutName.message).to.be.deep.equal('"name" is required');
+  })
+
+  it('testa se é possível adicionar um novo produto', async function () {
+    sinon.stub(productsModel, 'insertProduct').resolves(5)
+    const newProduct = await productsServices.addNewProduct("Chicote da Mulher Maravilha");
+
+    expect(newProduct.type).to.be.null;
+    expect(newProduct.message).to.be.deep.equal({
+      id: 5,
+      name: "Chicote da Mulher Maravilha",
     });
   });
   afterEach(sinon.restore);
