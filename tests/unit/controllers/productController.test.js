@@ -77,7 +77,7 @@ describe('testa a camada productControlle', function () {
     await productsController.addNewProduct(req, res);
 
     expect(res.status).to.have.been.calledWith(201)
-    expect(res.json).to.have.been.calledWith({ message: newProduct });
+    expect(res.json).to.have.been.calledWith(newProduct);
 
   });
 
