@@ -5,6 +5,10 @@ const addSales = async (req, res) => {
 
   const addSale = await salesServices.saveSales(salebody);
 
+  if (addSale.type) {
+    return res.status(addSale.type).json({ message: addSale.message });
+  }
+
   return res.status(201).json(addSale.message);
 };
 
