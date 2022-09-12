@@ -5,7 +5,6 @@ const validateSchemas = (salesBody) => salesBody.map(({ productId, quantity }) =
     const validation = schema.saleSchema.validate({ productId, quantity });
 
     if (validation.error && validation.error.message.includes('is required')) {
-      console.log(validation.error);
      return { type: 400, message: validation.error.message };
     }
     
@@ -14,18 +13,15 @@ const validateSchemas = (salesBody) => salesBody.map(({ productId, quantity }) =
       return { type: 422, message: validation.error.message };
     }
     return null;
-  });
+});
 
 const validadeIds = async (allIds, salesBody) => salesBody.map((item) => {
-    console.log('idss', allIds);
     const findId = allIds.find((id) => item.productId === id);
-    console.log('AHHHH', findId);
     if (findId === undefined) {
-      console.log('não existe', findId);
       return { type: 404, message: 'Product not found' };
     }
     return null;
-  });
+});
 
 const saveSales = async (salesBody) => {
   const allIds = await salesModel.getAllIds();

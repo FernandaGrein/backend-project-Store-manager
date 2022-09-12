@@ -17,6 +17,7 @@ const getAllIds = async () => {
   const [result] = await connection.execute(
     'SELECT id FROM products',
   );
+
   const ids = result.map((item) => item.id);
   return ids;
 };

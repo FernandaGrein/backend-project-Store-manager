@@ -7,7 +7,7 @@ const {
   allProducts,
   productWithId1,
   productNotFound,
-} = require("./productsModelMock");
+} = require("./ModelsMocks");
 
 describe('Testa a camada productsModel', function () {
   it('testa o comando SELECT * da tabela products', async function () {
