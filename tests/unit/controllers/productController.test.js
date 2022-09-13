@@ -12,6 +12,7 @@ const {
   allProducts,
   productWithId1,
   newProduct,
+  updatedProduct,
 } = require("./ControllersMocks");
 
 describe('testa a camada productControlle', function () {
@@ -94,6 +95,44 @@ describe('testa a camada productControlle', function () {
     });
 
     await productsController.addNewProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(422);
+    expect(res.json).to.have.been.calledWith({
+      message: '"name" length must be at least 5 characters long',
+    });
+  })
+
+  it('testa se é possível atualizar um produt', async function () {
+    const res = {}
+    const req = { params: { id: 1 }, body: { name: "Martelo do Batman" } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(productsServices, "updateProduct").resolves({
+      type: null, 
+      message: updatedProduct
+    })
+
+    await productsController.updateProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(updatedProduct);
+  });
+
+  it('testa se houver um erro na requisição uma mensagem de erro é retornada', async function () {
+    const res = {};
+    const req = { params: { id: 1 }, body: { name: "as" } };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(productsServices, "updateProduct").resolves({
+      type: 422,
+      message: '"name" length must be at least 5 characters long',
+    });
+
+    await productsController.updateProduct(req, res);
 
     expect(res.status).to.have.been.calledWith(422);
     expect(res.json).to.have.been.calledWith({

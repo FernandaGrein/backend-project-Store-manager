@@ -84,6 +84,11 @@ const saleById = [
   },
 ];
 
+const updatedProduct = {
+  id: 1,
+  name: "Martelo do Batman",
+};
+
 
 module.exports = {
   allProducts,
@@ -94,4 +99,5 @@ module.exports = {
   saleBody,
   allSales,
   saleById,
+  updatedProduct,
 };
