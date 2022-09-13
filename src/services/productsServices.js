@@ -4,9 +4,6 @@ const schemas = require('./validations/schemas');
 const getAllProducts = async () => {
   const products = await productsModel.getAllProducts();
 
-  // if (!products) {
-  //   return { type: 404, message: 'Product not found' };
-  // }
   return { type: null, message: products };
 };
 
