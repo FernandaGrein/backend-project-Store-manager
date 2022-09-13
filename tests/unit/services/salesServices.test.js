@@ -12,7 +12,7 @@ const {
   saleBodyWithWrogId,
 } = require("./ServicesMocks");
 
-describe('testa a camada salesServices', function () {
+describe('testa a camada salesServices na rota post', function () {
   it('verifica se é possível salvar uma venda com sucesso', async function () {
     sinon.stub(salesModel, "saveSales").resolves(4)
 
