@@ -10,6 +10,8 @@ const {
   saleBodyWithOutProduct,
   saleBodyWithOutQuantity,
   saleBodyWithWrogId,
+  allSales,
+  saleById,
 } = require("./ServicesMocks");
 
 describe('testa a camada salesServices na rota post', function () {
@@ -44,3 +46,32 @@ describe('testa a camada salesServices na rota post', function () {
   
   afterEach(sinon.restore);
 });
+
+describe('testa a rota get/sales na camada Services', function () {
+  it('testa se é possível recuperar todas as vendas com sucesso', async function () { 
+    sinon.stub(salesModel, "getAllSales").resolves(allSales);
+
+    const result = await saleServices.getAllSales();
+
+    expect(result.type).to.be.null;
+    expect(result.message).to.be.deep.equal(allSales);
+  });
+  it('testa se é possivel selecionar uma venda por id', async function () { 
+    sinon.stub(salesModel, "getSalesById").resolves(saleById);
+
+    const result = await saleServices.getSalesById(1);
+    
+    expect(result.type).to.be.null;
+    expect(result.message).to.be.deep.equal(saleById);
+  });
+
+  it('testa se passar um id inexistente retorna a mensagem de não encontrado', async function () {
+     sinon.stub(salesModel, "getSalesById").resolves([]);
+
+     const result = await saleServices.getSalesById(199);
+
+     expect(result.type).to.be.equal(404);
+     expect(result.message).to.be.deep.equal("Sale not found");
+  })
+    afterEach(sinon.restore);
+})
