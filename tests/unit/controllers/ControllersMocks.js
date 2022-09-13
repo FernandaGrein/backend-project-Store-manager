@@ -25,9 +25,37 @@ const newProduct = {
 
 const productNotFound = [{ message: "Product not found" }];
 
+const saleBody = [
+  {
+    productId: 1,
+    quantity: 1,
+  },
+  {
+    productId: 2,
+    quantity: 5,
+  },
+];
+
+const salesSaved = {
+  id: 3,
+  itemsSold: [
+    {
+      productId: 1,
+      quantity: 1,
+    },
+    {
+      productId: 2,
+      quantity: 5,
+    },
+  ],
+};
+
+
 module.exports = {
   allProducts,
   productWithId1,
   productNotFound,
   newProduct,
+  salesSaved,
+  saleBody,
 };

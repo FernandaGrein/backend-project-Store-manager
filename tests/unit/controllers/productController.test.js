@@ -12,7 +12,7 @@ const {
   allProducts,
   productWithId1,
   newProduct,
-} = require("./productControllerMocks");
+} = require("./ControllersMocks");
 
 describe('testa a camada productControlle', function () {
   it('testa se é possível selecionar todos os produtos', async function () {
