@@ -45,7 +45,7 @@ const updateProduct = async (id, product) => {
   const validate = nameValidation(product);
   if (validate) return validate;
 
-  const affectedLines = await productsModel.edidProduct(id, product);
+  const affectedLines = await productsModel.editProduct(id, product);
 
   if (affectedLines === 0) {
     return { type: 404, message: 'Product not found' };

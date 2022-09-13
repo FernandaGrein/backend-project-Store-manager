@@ -41,5 +41,20 @@ describe('Testa a camada productsModel', function () {
 
     expect(result).to.be.equal(5);
   });
+
+  it('testa se é possível atualizar um produto', async function () {
+    sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+    const result = await productsModel.editProduct(1, "Martelo do Batman");
+
+    expect(result).to.be.equal(1)
+  });
+
+  it('testa se o id for inexistente, não há alteração na tabela', async function () {
+    sinon.stub(connection, "execute").resolves([{ affectedRows: 0 }]);
+    const result = await productsModel.editProduct(1987, "Martelo do Batman");
+
+     expect(result).to.be.equal(0);
+  })
+
    afterEach(sinon.restore);
 });
