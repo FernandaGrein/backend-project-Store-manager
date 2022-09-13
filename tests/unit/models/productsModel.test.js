@@ -9,7 +9,7 @@ const {
   productNotFound,
 } = require("./ModelsMocks");
 
-describe('Testa a camada productsModel', function () {
+describe('Testes das rotas get e post na camada productsModel', function () {
   it('testa o comando SELECT * da tabela products', async function () {
     sinon.stub(connection, "execute").resolves([allProducts]);
 
@@ -34,14 +34,22 @@ describe('Testa a camada productsModel', function () {
     
     expect(result).to.be.deep.equal(productNotFound[0])
   });
+   afterEach(sinon.restore);
+});
 
-  it('testa se é possível adicionar um novo produto', async function () {
+describe("testa a rota post na camada products Mode", function () {
+  it("testa se é possível adicionar um novo produto", async function () {
     sinon.stub(connection, "execute").resolves([{ insertId: 5 }]);
-    const result = await productsModel.insertProduct("Chicote da Mulher Maravilha")
+    const result = await productsModel.insertProduct(
+      "Chicote da Mulher Maravilha"
+    );
 
     expect(result).to.be.equal(5);
-  });
+  }); 
+  after(sinon.restore);
+});
 
+describe('testa a rota update na camada products Model', function () {
   it('testa se é possível atualizar um produto', async function () {
     sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
     const result = await productsModel.editProduct(1, "Martelo do Batman");
@@ -49,12 +57,22 @@ describe('Testa a camada productsModel', function () {
     expect(result).to.be.equal(1)
   });
 
-  it('testa se o id for inexistente, não há alteração na tabela', async function () {
+  it("testa se o id for inexistente, não há alteração na tabela", async function () {
     sinon.stub(connection, "execute").resolves([{ affectedRows: 0 }]);
     const result = await productsModel.editProduct(1987, "Martelo do Batman");
 
-     expect(result).to.be.equal(0);
-  })
-
-   afterEach(sinon.restore);
+    expect(result).to.be.equal(0);
+  });
+  afterEach(sinon.restore);
 });
+
+describe('testa a rota delete na camada products Model', function () {
+  it('testa se é possível deletar um produto com sucesso', async function () {
+    sinon.stub(connection, "execute").resolves([{ affectedRows: 1 }]);
+    
+    const result = await productsModel.deleteProduct(1)
+
+    expect(result).to.be.equal(1)
+  });
+  after(sinon.restore);
+})
