@@ -1,9 +1,8 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const connection = require('../../../src/models/connection');
 const productsModel = require('../../../src/models/productsModel');
 const productsServices = require('../../../src/services/productsServices');
-const { allProducts, productWithId1 } = require("./productsServicesMocks");
+const { allProducts, productWithId1 } = require("./ServicesMocks");
 
 describe('testa a camada productsServives', function () {
   it('testa se é possível buscar todos os produtos', async function () {
