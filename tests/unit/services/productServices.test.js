@@ -68,36 +68,54 @@ describe('testa a rota post na camada products Services', function () {
 });
 
 describe('testa a rota put na camada products Services', function () {
-   it("testa se é possível editar um produto", async function () {
-     sinon.stub(productsModel, "editProduct").resolves(1);
-     const result = await productsServices.updateProduct(
-       1,
-       "Martelo do Batman"
-     );
+  it("testa se é possível editar um produto", async function () {
+    sinon.stub(productsModel, "editProduct").resolves(1);
+    const result = await productsServices.updateProduct(
+      1,
+      "Martelo do Batman"
+    );
 
-     expect(result.type).to.be.null;
-     expect(result.message).to.be.deep.equal({
-       id: 1,
-       name: "Martelo do Batman",
-     });
-   });
+    expect(result.type).to.be.null;
+    expect(result.message).to.be.deep.equal({
+      id: 1,
+      name: "Martelo do Batman",
+    });
+  });
 
-   it("testa se o id for inexistente retorna um erro", async function () {
-     sinon.stub(productsModel, "editProduct").resolves(0);
-     const result = await productsServices.updateProduct(
-       9999,
-       "Martelo do Batman"
-     );
+  it("testa se o id for inexistente retorna um erro", async function () {
+    sinon.stub(productsModel, "editProduct").resolves(0);
+    const result = await productsServices.updateProduct(
+      9999,
+      "Martelo do Batman"
+    );
 
-     expect(result.type).to.be.equal(404);
-     expect(result.message).to.be.deep.equal("Product not found");
-   });
+    expect(result.type).to.be.equal(404);
+    expect(result.message).to.be.deep.equal("Product not found");
+  });
 
-   it("testa se não é possível alterar uma tabela sem o name", async function () {
-     const result = await productsServices.updateProduct(1, "");
+  it("testa se não é possível alterar uma tabela sem o name", async function () {
+    const result = await productsServices.updateProduct(1, "");
 
-     expect(result.type).to.be.equal(400);
-     expect(result.message).to.be.deep.equal('"name" is required');
+    expect(result.type).to.be.equal(400);
+    expect(result.message).to.be.deep.equal('"name" is required');
+  });
+  afterEach(sinon.restore);
+});
+
+describe('testa a rota delete na camada products Services', function () {
+  it('testa se é possível deletar um produto com sucesso', async function () { 
+    sinon.stub(productsModel, "deleteProduct").resolves(1);
+    const result = await productsServices.deleteProduct(2);
+
+    expect(result.type).to.be.null;
+  });
+  it("testa se retorna um erro ao tentar deletar um id inexistente", async function () { 
+    sinon.stub(productsModel, "deleteProduct").resolves(0);
+
+    const result = await productsServices.deleteProduct(999);
+
+    expect(result.type).to.be.equal(404);
+    expect(result.message).to.be.deep.equal("Product not found");
    });
   afterEach(sinon.restore);
-})
+});
