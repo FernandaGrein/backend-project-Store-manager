@@ -36,7 +36,7 @@ const deleteProduct = async (id) => {
   const [{ affectedRows }] = await connection.execute(
     'DELETE FROM products WHERE id = ?', [id],
   );
-
+  console.log(affectedRows);
   return affectedRows;
 };
 
