@@ -4,7 +4,7 @@ const productsModel = require('../../../src/models/productsModel');
 const productsServices = require('../../../src/services/productsServices');
 const { allProducts, productWithId1 } = require("./ServicesMocks");
 
-describe('testa a camada productsServives', function () {
+describe('testa a rota get na camada productsServives', function () {
   it('testa se é possível buscar todos os produtos', async function () {
     sinon.stub(productsModel, "getAllProducts").resolves(allProducts);
     
@@ -34,11 +34,14 @@ describe('testa a camada productsServives', function () {
       name: "Martelo de Thor",
     });
   });
+  afterEach(sinon.restore);
+});
 
+describe('testa a rota post na camada products Services', function () {
   it('Testando a validação do "name" recebido pelo body', async function () {
     const result = await productsServices.addNewProduct("as");
 
-    expect(result.type).to.be.equal(422)
+    expect(result.type).to.be.equal(422);
     expect(result.message).to.be.deep.equal(
       '"name" length must be at least 5 characters long'
     );
@@ -47,11 +50,13 @@ describe('testa a camada productsServives', function () {
 
     expect(resultWithOutName.type).to.be.equal(400);
     expect(resultWithOutName.message).to.be.deep.equal('"name" is required');
-  })
+  });
 
-  it('testa se é possível adicionar um novo produto', async function () {
-    sinon.stub(productsModel, 'insertProduct').resolves(5)
-    const newProduct = await productsServices.addNewProduct("Chicote da Mulher Maravilha");
+  it("testa se é possível adicionar um novo produto", async function () {
+    sinon.stub(productsModel, "insertProduct").resolves(5);
+    const newProduct = await productsServices.addNewProduct(
+      "Chicote da Mulher Maravilha"
+    );
 
     expect(newProduct.type).to.be.null;
     expect(newProduct.message).to.be.deep.equal({
@@ -59,30 +64,40 @@ describe('testa a camada productsServives', function () {
       name: "Chicote da Mulher Maravilha",
     });
   });
-  it('testa se é possível editar um produto', async function () {
-    sinon.stub(productsModel, "editProduct").resolves(1)
-    const result = await productsServices.updateProduct(1, "Martelo do Batman");
-
-    expect(result.type).to.be.null;
-    expect(result.message).to.be.deep.equal({
-      id: 1,
-      name: "Martelo do Batman",
-    });
-  })
-
-  it('testa se o id for inexistente retorna um erro', async function () {
-    sinon.stub(productsModel, "editProduct").resolves(0)
-    const result = await productsServices.updateProduct(9999, "Martelo do Batman");
-
-    expect(result.type).to.be.equal(404)
-    expect(result.message).to.be.deep.equal("Product not found");
-  })
-
-  it('testa se não é possível alterar uma tabela sem o name', async function () {
-    const result = await productsServices.updateProduct(1, "")
-
-    expect(result.type).to.be.equal(400);
-    expect(result.message).to.be.deep.equal('"name" is required');
-  })
   afterEach(sinon.restore);
 });
+
+describe('testa a rota put na camada products Services', function () {
+   it("testa se é possível editar um produto", async function () {
+     sinon.stub(productsModel, "editProduct").resolves(1);
+     const result = await productsServices.updateProduct(
+       1,
+       "Martelo do Batman"
+     );
+
+     expect(result.type).to.be.null;
+     expect(result.message).to.be.deep.equal({
+       id: 1,
+       name: "Martelo do Batman",
+     });
+   });
+
+   it("testa se o id for inexistente retorna um erro", async function () {
+     sinon.stub(productsModel, "editProduct").resolves(0);
+     const result = await productsServices.updateProduct(
+       9999,
+       "Martelo do Batman"
+     );
+
+     expect(result.type).to.be.equal(404);
+     expect(result.message).to.be.deep.equal("Product not found");
+   });
+
+   it("testa se não é possível alterar uma tabela sem o name", async function () {
+     const result = await productsServices.updateProduct(1, "");
+
+     expect(result.type).to.be.equal(400);
+     expect(result.message).to.be.deep.equal('"name" is required');
+   });
+  afterEach(sinon.restore);
+})
