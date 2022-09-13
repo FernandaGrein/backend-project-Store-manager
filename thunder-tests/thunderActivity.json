@@ -8,14 +8,9 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2022-09-09T18:18:48.375Z",
-    "modified": "2022-09-09T21:50:00.694Z",
+    "modified": "2022-09-13T20:15:41.228Z",
     "headers": [],
     "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"name\": \"Chicote da Mulher Maravilha\"\n}",
-      "form": []
-    },
     "tests": []
   },
   {
@@ -247,6 +242,48 @@
       "raw": "{\n  \"name\": \"Martelo do Batman\"\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "28750150-c097-4e35-a2c0-bb6452a4082d",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/3",
+    "url": "http://localhost:3000/3",
+    "method": "DELETE",
+    "sortNum": 0,
+    "created": "2022-09-13T20:14:54.007Z",
+    "modified": "2022-09-13T20:14:54.024Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "acf187fe-5754-4478-9893-8ca73953a2ea",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products/3",
+    "url": "http://localhost:3000/products/3",
+    "method": "DELETE",
+    "sortNum": 0,
+    "created": "2022-09-13T20:15:11.555Z",
+    "modified": "2022-09-13T20:15:11.602Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "1fd417e1-0fbd-490c-be55-2a2fa77c2439",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/products/34",
+    "url": "http://localhost:3000/products/34",
+    "method": "DELETE",
+    "sortNum": 0,
+    "created": "2022-09-13T20:15:34.091Z",
+    "modified": "2022-09-13T20:15:34.135Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]
