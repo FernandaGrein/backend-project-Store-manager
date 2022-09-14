@@ -48,7 +48,7 @@ describe('testa a camada salesServices na rota post', function () {
 });
 
 describe('testa a rota get/sales na camada Services', function () {
-  it('testa se é possível recuperar todas as vendas com sucesso', async function () { 
+  it('testa se é possível recuperar todas as vendas com sucesso', async function () {
     sinon.stub(salesModel, "getAllSales").resolves(allSales);
 
     const result = await saleServices.getAllSales();
@@ -56,7 +56,7 @@ describe('testa a rota get/sales na camada Services', function () {
     expect(result.type).to.be.null;
     expect(result.message).to.be.deep.equal(allSales);
   });
-  it('testa se é possivel selecionar uma venda por id', async function () { 
+  it('testa se é possivel selecionar uma venda por id', async function () {
     sinon.stub(salesModel, "getSalesById").resolves(saleById);
 
     const result = await saleServices.getSalesById(1);
@@ -66,12 +66,30 @@ describe('testa a rota get/sales na camada Services', function () {
   });
 
   it('testa se passar um id inexistente retorna a mensagem de não encontrado', async function () {
-     sinon.stub(salesModel, "getSalesById").resolves([]);
+    sinon.stub(salesModel, "getSalesById").resolves([]);
 
-     const result = await saleServices.getSalesById(199);
+    const result = await saleServices.getSalesById(199);
 
-     expect(result.type).to.be.equal(404);
-     expect(result.message).to.be.deep.equal("Sale not found");
+    expect(result.type).to.be.equal(404);
+    expect(result.message).to.be.deep.equal("Sale not found");
   })
-    afterEach(sinon.restore);
-})
+  afterEach(sinon.restore);
+});
+
+describe("testa a rota delete na camada sales Services", function () {
+  it("testa se é possível deletar uma venda com sucesso", async function () {
+    sinon.stub(salesModel, "deleteSale").resolves(1);
+    const result = await saleServices.deleteSale(2);
+
+    expect(result.type).to.be.null;
+  });
+  it("testa se retorna um erro ao tentar deletar um id inexistente", async function () {
+    sinon.stub(salesModel, "deleteSale").resolves(0);
+
+    const result = await saleServices.deleteSale(999);
+
+    expect(result.type).to.be.equal(404);
+    expect(result.message).to.be.deep.equal("Sale not found");
+  });
+  afterEach(sinon.restore);
+});

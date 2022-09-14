@@ -38,3 +38,14 @@ describe('testa a camada salesModel na rota get', function () {
   })
    afterEach(sinon.restore);
 });
+
+describe("testa a rota delete na camada sales Model", function () {
+  it("testa se é possível deletar um produto com sucesso", async function () {
+    sinon.stub(conn, "execute").resolves([{ affectedRows: 1 }]);
+
+    const result = await salesModel.deleteSale(1)
+
+    expect(result).to.be.equal(1);
+  });
+  after(sinon.restore);
+});
