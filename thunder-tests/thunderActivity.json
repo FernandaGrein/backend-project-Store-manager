@@ -299,5 +299,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "e3e6e5f5-ce6e-44a2-ba0c-b4fa5e7f484e",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:3000/sales/2",
+    "url": "http://localhost:3000/sales/2",
+    "method": "DELETE",
+    "sortNum": 0,
+    "created": "2022-09-14T17:45:19.920Z",
+    "modified": "2022-09-14T17:46:33.364Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

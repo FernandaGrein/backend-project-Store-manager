@@ -47,9 +47,21 @@ const getSalesById = async (id) => {
   return camelize(result);
 };
 
+const deleteSale = async (id) => {
+  const [{ affectedRows }] = await connection.execute(
+    `DELETE sales_products, sales FROM sales_products INNER JOIN sales 
+    WHERE sales_products.sale_id = sales.id AND sales_products.sale_id =
+    ?`,
+    [id],
+  );
+
+  return affectedRows;
+};
+
 module.exports = {
   saveSales,
   getAllIds,
   getAllSales,
   getSalesById,
+  deleteSale,
 };
