@@ -15,10 +15,9 @@ const nameValidation = (productName) => {
   }
 };
 
-const validateSchemas = (salesBody) =>
-  salesBody.map(({ productId, quantity }) => {
+const validateSchemas = (salesBody) => salesBody.map(({ productId, quantity }) => {
     const validation = schemas.saleSchema.validate({ productId, quantity });
-
+    
     if (validation.error && validation.error.message.includes('is required')) {
       return { type: 400, message: validation.error.message };
     }
@@ -42,8 +41,36 @@ const validadeIds = async (allIds, salesBody) =>
     return null;
 });
 
+const validateSalesId = async (id, allIds) => {
+  const findId = allIds.find((item) => Number(item) === Number(id));
+
+  if (findId === undefined) {
+    return 'Sale not found';
+  }
+
+  return null;
+};
+
+// const validateWithOneUpdate = ({ productId, quantity }) => {
+//  const validation = schemas.saleSchema.validate({ productId, quantity });
+
+//   if (validation.error && validation.error.message.includes('is required')) {
+//    return { type: 404, message: 'Product not found' };
+//   }
+
+//   if (
+//    validation.error
+//    && validation.error.message === '"quantity" must be greater than or equal to 1'
+//   ) {
+//    return { type: 422, message: validation.error.message };
+//   }
+//   return null;
+// };
+ 
 module.exports = {
   nameValidation,
   validateSchemas,
   validadeIds,
+  validateSalesId,
+  // validateWithOneUpdate,
 };

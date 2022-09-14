@@ -1,5 +1,10 @@
 const salesModel = require('../models/saleModels');
-const { validateSchemas, validadeIds } = require('./validations/validationsFunctions');
+const {
+  validateSchemas,
+  validadeIds,
+  validateSalesId,
+  // validateWithOneUpdate,
+} = require('./validations/validationsFunctions');
 
 const saveSales = async (salesBody) => {
   const allIds = await salesModel.getAllIds();
@@ -47,9 +52,37 @@ const deleteSale = async (id) => {
   return { type: null };
 };
 
+const updateSale = async (id, updateBody) => {
+  const allIds = await salesModel.allSalesId();
+  const validateId = await validateSalesId(id, allIds);
+
+  if (validateId === 'Sale not found') { return { type: 404, message: 'Sale not found' }; }
+
+  const errorsArray = await validateSchemas(updateBody);
+  const error = errorsArray.find((item) => item !== null);
+  if (error) return error;
+
+  const invalidArray = await validadeIds(allIds, updateBody);
+  const invalidation = invalidArray.find((item) => item !== null);
+  if (invalidation) return invalidation;
+
+  // if (updateBody.length === 1) {
+  //   const validate = await validateWithOneUpdate(updateBody);
+  //   if (validate) return validate;
+  // }
+
+  await salesModel.updateSale(id, updateBody);
+
+  return {
+    type: null,
+    message: { saleId: id, itemsUpdated: updateBody },
+  };
+};
+
 module.exports = {
   saveSales,
   getAllSales,
   getSalesById,
   deleteSale,
+  updateSale,
 };
