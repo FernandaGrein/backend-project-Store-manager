@@ -98,3 +98,37 @@ describe('testa a rota get/sales na camada sales Controller', function () {
    });
   afterEach(sinon.restore);
 });
+
+describe("testa a rota delete na camada sales Controller", function () {
+  it("testa se é possível deleter uma venda com sucesso", async function () {
+    const res = {};
+    const req = { params: { id: 2 }, body: {} };
+
+    res.status = sinon.stub().returns(res);
+    res.end = sinon.stub().returns();
+
+    sinon.stub(salesServices, "deleteSale").resolves({ type: null });
+
+    await salesController.deleteSale(req, res);
+
+    expect(res.status).to.have.been.calledWith(204);
+  });
+
+    it("testa se retorna uma mensagem de erro ao tentar deletar um id inexistente", async function () {
+      const res = {};
+      const req = { params: { id: 999 }, body: {} };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon
+        .stub(salesServices, "deleteSale")
+        .resolves({ type: 404, message: "Sale not found" });
+
+      await salesController.deleteSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({ message: "Sale not found" });
+    });
+  afterEach(sinon.restore);
+});
