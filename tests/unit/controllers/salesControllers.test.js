@@ -7,7 +7,14 @@ chai.use(sinonChai);
 
 const salesController = require('../../../src/controllers/salesController');
 const salesServices = require('../../../src/services/saleServices');
-const { saleBody, salesSaved, allSales, saleById } = require('./ControllersMocks')
+const {
+  saleBody,
+  salesSaved,
+  allSales,
+  saleById,
+  updateBody,
+  wrongUpdateBody,
+} = require("./ControllersMocks");
 
 describe('testa a rota post da camada sales Controller', function () {
   it('testa a rota sales/post que adiciona as vendas no banco de dados', async function () {
@@ -130,5 +137,48 @@ describe("testa a rota delete na camada sales Controller", function () {
       expect(res.status).to.have.been.calledWith(404);
       expect(res.json).to.have.been.calledWith({ message: "Sale not found" });
     });
+  afterEach(sinon.restore);
+});
+
+describe('testa se é possivel atualizar uma venda', function () {
+  it("testa se é possível atualizar uma venda com sucesso", async function () {
+    const res = {};
+    const req = { params: { id: 1 }, body: updateBody };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(salesServices, "updateSale").resolves({
+      type: null,
+      message: { saleId: 1, itemsUpdated: updateBody },
+    });
+
+    await salesController.updateSale(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith({
+      saleId: 1,
+      itemsUpdated: updateBody,
+    });
+  });
+  it("testa se retorna um erro quando não é possível atualizar a venda", async function () {
+    const res = {};
+    const req = { params: { id: 1 }, body: wrongUpdateBody };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon.stub(salesServices, "updateSale").resolves({
+      type: 400,
+      message: '"productId" is required',
+    });
+
+    await salesController.updateSale(req, res);
+
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith({
+      message: '"productId" is required',
+    });
+  });
   afterEach(sinon.restore);
 });

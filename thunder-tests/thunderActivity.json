@@ -344,11 +344,11 @@
     "colId": "history",
     "containerId": "",
     "name": "http://localhost:3000/sales/267",
-    "url": "http://localhost:3000/sales/267",
+    "url": "http://localhost:3000/sales/2",
     "method": "PUT",
     "sortNum": 0,
     "created": "2022-09-14T19:00:04.890Z",
-    "modified": "2022-09-14T19:03:06.971Z",
+    "modified": "2022-09-15T18:27:35.158Z",
     "headers": [],
     "params": [],
     "body": {

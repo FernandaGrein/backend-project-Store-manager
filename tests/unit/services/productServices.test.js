@@ -1,8 +1,13 @@
 const { expect } = require('chai');
+const { isRef } = require('joi');
 const sinon = require('sinon');
 const productsModel = require('../../../src/models/productsModel');
 const productsServices = require('../../../src/services/productsServices');
-const { allProducts, productWithId1 } = require("./ServicesMocks");
+const {
+  allProducts,
+  productWithId1,
+  productByTerm,
+} = require("./ServicesMocks");
 
 describe('testa a rota get na camada productsServives', function () {
   it('testa se é possível buscar todos os produtos', async function () {
@@ -119,3 +124,21 @@ describe('testa a rota delete na camada products Services', function () {
    });
   afterEach(sinon.restore);
 });
+
+describe('testa a rota que busca um produto pelo nome', function () {
+  it('testa se é possível buscar um produto por parte do nome', async function () {
+      sinon.stub(productsModel, "searchByTerm").resolves(productByTerm);
+
+      const product = await productsServices.searchByTerm("Martelo");
+
+      expect(product).to.be.deep.equal(productByTerm);
+  })
+  it('testa se quando não foi passado um termo e feita a busca de todos os produtos', async function () {
+    sinon.stub(productsModel, "getAllProducts").resolves(allProducts);
+
+    const product = await productsServices.searchByTerm("");
+    
+    expect(product).to.be.deep.equal(allProducts);
+  }); 
+  afterEach(sinon.restore);
+})

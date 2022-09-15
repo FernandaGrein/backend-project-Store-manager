@@ -12,6 +12,8 @@ const {
   saleBodyWithWrogId,
   allSales,
   saleById,
+  updateBody,
+  wrongUpdateBody,
 } = require("./ServicesMocks");
 
 describe('testa a camada salesServices na rota post', function () {
@@ -92,4 +94,39 @@ describe("testa a rota delete na camada sales Services", function () {
     expect(result.message).to.be.deep.equal("Sale not found");
   });
   afterEach(sinon.restore);
+});
+
+describe('testa a rota que atualiza uma venda', async function () {
+  it('testa se é possível atualizar uma venda com sucesso', async function () {
+   sinon.stub(salesModel, "updateSale").resolves();
+
+   const update = await saleServices.updateSale(1, updateBody);
+
+   expect(update.type).to.be.null;
+   expect(update.message).to.be.deep.equal({
+     saleId: 1,
+     itemsUpdated: updateBody,
+    });
+  });
+
+  it('testa se o id for inexistente a mensagem de erro é retornada', async function () {
+    const update = await saleServices.updateSale(9999, updateBody);
+
+    expect(update.type).to.be.equal(404);
+    expect(update.message).to.be.deep.equal("Sale not found");
+  });
+
+  it('testa se houver um erro no body é retornado uma mensagem de erro', async function () {
+   const error = await saleServices.updateSale(1, wrongUpdateBody);
+   expect(error.type).to.be.equal(400);
+   expect(error.message).to.be.deep.equal('"productId" is required');
+  });
+
+  it('testa se uma mensagem de erro é retornada ao tentar alterar um productId inexistente', async function () {
+     sinon.stub(salesModel, "getAllIds").resolves([productsIds]);
+     const error = await saleServices.updateSale(1, saleBodyWithWrogId);
+
+     expect(error.type).to.be.equal(404);
+     expect(error.message).to.be.deep.equal("Product not found");
+  })
 });

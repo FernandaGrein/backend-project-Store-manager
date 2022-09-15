@@ -49,3 +49,13 @@ describe("testa a rota delete na camada sales Model", function () {
   });
   after(sinon.restore);
 });
+
+describe("testa se é possível alterar uma venda com sucesso", function () {
+  it("testa se é possível atualizar uma venda com sucesso", async function () {
+    sinon.stub(conn, "execute").resolves()
+    const result = await salesModel.updateSale(1, salesBody);
+
+    expect(result).to.be.undefined;
+  });
+  after(sinon.restore);
+});

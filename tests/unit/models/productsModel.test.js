@@ -7,6 +7,7 @@ const {
   allProducts,
   productWithId1,
   productNotFound,
+  productByTerm,
 } = require("./ModelsMocks");
 
 describe('Testes das rotas get e post na camada productsModel', function () {
@@ -75,4 +76,15 @@ describe('testa a rota delete na camada products Model', function () {
     expect(result).to.be.equal(1)
   });
   after(sinon.restore);
-})
+});
+
+describe('testa a rota se é possível procurar um produto pelo nome', function () {
+  it('testa se é possível procurar um produto pelo nome', async function () {
+   sinon.stub(connection, "execute").resolves([productByTerm]);
+
+   const result = await productsModel.searchByTerm("Martelo");
+
+   expect(result).to.be.deep.equal(productByTerm);
+  });
+   after(sinon.restore);
+});

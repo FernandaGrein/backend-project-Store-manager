@@ -51,26 +51,9 @@ const validateSalesId = async (id, allIds) => {
   return null;
 };
 
-// const validateWithOneUpdate = ({ productId, quantity }) => {
-//  const validation = schemas.saleSchema.validate({ productId, quantity });
-
-//   if (validation.error && validation.error.message.includes('is required')) {
-//    return { type: 404, message: 'Product not found' };
-//   }
-
-//   if (
-//    validation.error
-//    && validation.error.message === '"quantity" must be greater than or equal to 1'
-//   ) {
-//    return { type: 422, message: validation.error.message };
-//   }
-//   return null;
-// };
- 
 module.exports = {
   nameValidation,
   validateSchemas,
   validadeIds,
   validateSalesId,
-  // validateWithOneUpdate,
 };

@@ -68,12 +68,13 @@ const allSalesId = async () => {
 
 const updateSale = async (id, updateBody) => {
   console.log(updateBody);
-  await updateBody.forEach((item) =>
+  const [result] = await updateBody.map((item) =>
     connection.execute(
       `UPDATE sales_products SET quantity = ?
         WHERE sale_id = ? AND product_id = ?`,
       [item.quantity, id, item.productId],
     ));
+  return result;
 };
 
 module.exports = {

@@ -3,7 +3,6 @@ const {
   validateSchemas,
   validadeIds,
   validateSalesId,
-  // validateWithOneUpdate,
 } = require('./validations/validationsFunctions');
 
 const saveSales = async (salesBody) => {
@@ -65,11 +64,6 @@ const updateSale = async (id, updateBody) => {
   const invalidArray = await validadeIds(allIds, updateBody);
   const invalidation = invalidArray.find((item) => item !== null);
   if (invalidation) return invalidation;
-
-  // if (updateBody.length === 1) {
-  //   const validate = await validateWithOneUpdate(updateBody);
-  //   if (validate) return validate;
-  // }
 
   await salesModel.updateSale(id, updateBody);
 

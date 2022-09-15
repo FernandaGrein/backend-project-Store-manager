@@ -67,6 +67,13 @@ const saleById = [
   },
 ];
 
+const productByTerm = [
+  {
+    id: 1,
+    name: "Martelo de Thor",
+  },
+];
+
 module.exports = {
   allProducts,
   productWithId1,
@@ -75,4 +82,5 @@ module.exports = {
   productsIds,
   allSales,
   saleById,
+  productByTerm,
 }; 

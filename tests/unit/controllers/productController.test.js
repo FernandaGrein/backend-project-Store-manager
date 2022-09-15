@@ -13,6 +13,7 @@ const {
   productWithId1,
   newProduct,
   updatedProduct,
+  productByTerm,
 } = require("./ControllersMocks");
 
 
@@ -182,4 +183,21 @@ describe('testa a rota delete na camada product Controller', function () {
     expect(res.json).to.have.been.calledWith({ message: "Product not found" });
   });
   afterEach(sinon.restore);
+});
+
+describe('testa a rota search products name', function () {
+  it('testa se é possível buscar um produto pelo nome', async function () {
+    const res = {};
+    const req = { query: { q: "Martelo" }, body: {} };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productsServices, "searchByTerm").resolves(productByTerm);
+
+    await productsController.searchByTerm(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(productByTerm);
+  });
+  after(sinon.restore);
 });

@@ -111,6 +111,34 @@ const saleById = [
   },
 ];
 
+const productByTerm = [
+  {
+    id: 1,
+    name: "Martelo de Thor",
+  },
+];
+
+const updateBody = [
+  {
+    productId: 1,
+    quantity: 10,
+  },
+  {
+    productId: 2,
+    quantity: 50,
+  },
+];
+
+const wrongUpdateBody = [
+  {
+    quantity: 10,
+  },
+  {
+    productId: 2,
+    quantity: 50,
+  },
+];
+
 
 module.exports = {
   allProducts,
@@ -123,4 +151,7 @@ module.exports = {
   saleBodyWithWrogId,
   allSales,
   saleById,
+  productByTerm,
+  updateBody,
+  wrongUpdateBody,
 };
