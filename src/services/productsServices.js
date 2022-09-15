@@ -50,10 +50,21 @@ const deleteProduct = async (id) => {
   return { type: null };
 };
 
+const searchByTerm = async (term) => {
+  if (!term) {
+    const allProducts = await productsModel.getAllProducts();
+    return allProducts;
+  }
+  const result = await productsModel.searchByTerm(term);
+  
+  return result;
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   addNewProduct,
   updateProduct,
   deleteProduct,
+  searchByTerm,
 };
